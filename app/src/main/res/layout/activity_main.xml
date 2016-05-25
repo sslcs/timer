@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="data"
+            type="com.reven.timer.Data"/>
+    </data>
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin"
+        tools:context="com.reven.timer.MainActivity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CCE8CF"
+            android:orientation="horizontal"
+            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClickLast"
+                android:text="上次使用"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClickNext"
+                android:text="再次打乱"/>
+        </LinearLayout>
+        <TextView
+            android:padding="@dimen/activity_vertical_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CCE8CF"
+            android:gravity="center_horizontal"
+            android:text="@{data.shuffle}"
+            android:textSize="24sp"
+            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:onClick="onClickStop"
+            android:text="@{data.timer}"
+            android:textColor="@{data.timing ? @android:color/holo_red_dark : @android:color/holo_blue_dark}"
+            android:textSize="48sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{data.ao5}"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp"
+            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{data.ao12}"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp"
+            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickStart"
+            android:text="START"
+            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
+    </LinearLayout>
+</layout>
