@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">魔方计时器</string>
+    <string name="scramble_last">上次公式</string>
+    <string name="scramble_again">再次打乱</string>
+    <string name="start">开始计时</string>
+</resources>

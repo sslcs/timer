@@ -18,31 +18,31 @@
             android:layout_height="wrap_content"
             android:background="#CCE8CF"
             android:orientation="horizontal"
-            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}">
+            android:visibility="@{data.counting ? View.GONE : View.VISIBLE}">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:onClick="onClickLast"
-                android:text="上次使用"/>
+                android:text="@string/scramble_last"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:onClick="onClickNext"
-                android:text="再次打乱"/>
+                android:text="@string/scramble_again"/>
         </LinearLayout>
         <TextView
-            android:padding="@dimen/activity_vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#CCE8CF"
             android:gravity="center_horizontal"
+            android:padding="@dimen/activity_vertical_margin"
             android:text="@{data.shuffle}"
             android:textSize="24sp"
-            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
+            android:visibility="@{data.counting ? View.GONE : View.VISIBLE}"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -50,29 +50,43 @@
             android:gravity="center"
             android:onClick="onClickStop"
             android:text="@{data.timer}"
-            android:textColor="@{data.timing ? @android:color/holo_red_dark : @android:color/holo_blue_dark}"
+            android:textColor="@{data.counting ? @android:color/holo_red_dark : @android:color/holo_blue_dark}"
             android:textSize="48sp"/>
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@{data.ao5}"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="20sp"
-            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@{data.ao12}"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="20sp"
-            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{data.pb}"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"
+                android:visibility="@{data.counting ? View.GONE : View.VISIBLE}"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{data.ao5}"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"
+                android:visibility="@{data.counting ? View.GONE : View.VISIBLE}"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{data.ao12}"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"
+                android:visibility="@{data.counting ? View.GONE : View.VISIBLE}"/>
+        </LinearLayout>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClickStart"
-            android:text="START"
-            android:visibility="@{data.timing ? View.GONE : View.VISIBLE}"/>
+            android:layout_marginBottom="20dp"
+            android:text="@string/start"
+            android:visibility="@{data.counting ? View.GONE : View.VISIBLE}"/>
     </LinearLayout>
 </layout>

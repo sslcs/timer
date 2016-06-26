@@ -10,15 +10,14 @@ import android.view.View;
 import com.reven.timer.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    final static String[] STEPS = new String[]{"R ", "R'", "U ", "U'", "F ", "F'", "L ", "L'", "B ", "B'", "D ", "D'"};
+    final static String[] STEPS = new String[]{"R", "U", "F", "L", "B", "D"};
     private Data data;
     private Handler handler = new Handler();
     private int timer = 0;
+    private int pb = -1;
     private Runnable runnable = new Runnable() {
         public void run() {
             timer += 1;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void appendTimer(StringBuilder sb, int time) {
         if (time < 100) {
-            sb.append(time % 100 / (data.timing.get() ? 10 : 1));
+            sb.append(time % 100 / (data.counting.get() ? 10 : 1));
         } else if (time < 60 * 100) {
             sb.append(time / 100).append(".");
             appendTimer(sb, time % 100);
@@ -96,23 +95,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void shuffle() {
-        List<String> asList = Arrays.asList(STEPS);
-        ArrayList<String> shuffle = new ArrayList<>(asList);
-        for (int i = 0; i < 12; i++) {
-            int index = (int) Math.floor(Math.random() * 12);
-            shuffle.add(STEPS[index]);
-        }
-        Collections.shuffle(shuffle);
+        int count = 0;
+        int lastIndex = -1;
+        int append;
+        int index;
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 24; i++) {
-            String step = shuffle.get(i);
-            sb.append(step).append(" ");
-            if (i == 11) {
+        while (count < 24) {
+            index = (int) Math.floor(Math.random() * 6);
+            while (index == lastIndex) {
+                index = (int) Math.floor(Math.random() * 6);
+            }
+            lastIndex = index;
+            sb.append(STEPS[index]);
+            count += 1;
+
+            append = (int) Math.floor(Math.random() * 3);
+            if (append == 1) {
+                sb.append("' ");
+            } else if (append == 0) {
+                sb.append(" ");
+            } else if (count != 24) {
+                sb.append("2");
+                count += 1;
+                if (count == 13) {
+                    sb.append("\n");
+                } else {
+                    sb.append(" ");
+                }
+            }
+
+            if (count == 12) {
                 sb.append("\n");
             }
-        }
-        if (sb.length() > 0) {
-            sb.deleteCharAt(sb.length() - 1);
         }
         data.shuffle.set(sb.toString());
     }
@@ -122,29 +136,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickStart(View view) {
-        if (data.timing.get()) {
+        if (data.counting.get()) {
             return;
         }
 
         data.shuffleLast = data.shuffle.get();
-        data.timing.set(true);
+        data.counting.set(true);
         timer = 0;
         handler.post(runnable);
     }
 
     public void onClickStop(View view) {
-        if (!data.timing.get()) {
+        if (!data.counting.get()) {
             return;
         }
 
-        data.timing.set(false);
+        data.counting.set(false);
         data.scores.add(timer);
-
-        if (data.scores.size() > 6) {
-            data.ao5.set("AO5 " + getTimer(average(7)));
+        if(pb==-1||timer<pb)
+        {
+            pb = timer;
+            data.pb.set("PB " + getTimer(timer));
         }
-        if (data.scores.size() > 13) {
-            data.ao12.set("AO12 " + getTimer(average(14)));
+
+        if (data.scores.size() > 4) {
+            data.ao5.set("AO5 " + getTimer(average(5)));
+        }
+        if (data.scores.size() > 11) {
+            data.ao12.set("AO12 " + getTimer(average(12)));
         }
 
         handler.removeCallbacks(runnable);
